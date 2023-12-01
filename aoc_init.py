@@ -13,6 +13,8 @@ def init_day(day: int):
     daily_dir = os.path.join(root_dir, f"dec{day}")
     try:
         os.mkdir(daily_dir)
+    except FileExistsError:
+        print("Directory already exists - updating input.txt")
     finally:
         request = requests.get(f"https://adventofcode.com/2023/day/{day}/input", cookies=cookies)
         inputfile = open(os.path.join(daily_dir, "input.txt"), "w")

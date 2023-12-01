@@ -4,14 +4,18 @@ def get_calibration_value(string: str) -> int:
                 "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9}
     first_digit = 0
     last_digit = 0
+    min_first = len(string)
+    max_last = -1
     for word in keywords:
-        if string.find(word) != -1:
+        index = string.find(word)
+        if index < min_first and index != -1:
             first_digit = keywords.get(word)
-            break
-    for word in keywords:
-        if string.rfind(word) != -1:
+            min_first = index
+        index = string.rfind(word)
+        if index > max_last and index != -1:
             last_digit = keywords.get(word)
-            break
+            max_last = index
+
     return int(str(first_digit) + str(last_digit))
 
 
@@ -34,6 +38,7 @@ def part2(input: str) -> int:
     lines = [token for token in input.split("\n")]
     calibration_sum = 0
     for line in lines:
+        print(get_calibration_value(line))
         calibration_sum += get_calibration_value(line)
     return calibration_sum
 
